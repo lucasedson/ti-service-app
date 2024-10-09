@@ -1,10 +1,45 @@
-import { getPedidos } from "./services/dataAcess/pedidosAcess";
+"use client";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { stringify } from "querystring";
+
+
+
 
 export default function Home() {
-  console.log(getPedidos())
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <h1>Hello</h1>
-    </div>
-  );
-}
+
+
+    const [pedidos, setPedidos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+  
+    useEffect(() => {
+      const fetchPedidos = async () => {
+        try {
+          const response = await axios.get("http://localhost:3000/api/pedidos");
+          setPedidos(response.data);
+        } catch (err) {
+          setError([]);
+          console.error("Erro ao carregar os pedidos:", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchPedidos();
+    }, []);
+  
+    if (loading) return <p>Carregando...</p>;
+    if (error) return <p>{error}</p>;
+  
+    return (
+      <div className="text-white">
+        <h1 className="text-3xl font-bold underline text-white">Pedidos</h1>
+        
+        {/* {String(pedidos.map((pedido) => (
+          <div key={p}>
+        ))} */}
+      </div>
+    );
+  }
+

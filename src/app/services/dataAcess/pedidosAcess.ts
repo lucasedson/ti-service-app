@@ -1,28 +1,18 @@
-import { get } from "http";
 import db from "../firebaseConfig";
-import { collection, onSnapshot, getDocs } from "firebase/firestore";
+import { collection, onSnapshot, getDocsFromServer, } from "firebase/firestore";
 
-function getPedidos() {
+
+async function getPedidos() {
+
+
     const pedidosRef = collection(db, "pedidos")
 
+    const snapshot = await getDocsFromServer(pedidosRef);
 
-    onSnapshot(pedidosRef, (snapshot) => {
-        const pedidos = snapshot.docs.map((doc) => {
-            return {
-                id: doc.id,
-                ...doc.data()
-            }
-        })
-        return pedidos
-    })
-}
-
-function getPedidosBySolicitante(solicitante: string) {
-    const pedidosRef = collection(db, "pedidos")
-
-
+    const pedidos = snapshot.docs.map(doc => doc.data())
+    return pedidos
 
 }
-    
+
 
 export { getPedidos }
