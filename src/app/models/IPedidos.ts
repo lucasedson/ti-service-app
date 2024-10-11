@@ -1,3 +1,5 @@
+import { UUID } from "crypto";
+
 enum Status {
     Aguardando = 'Aguardando',
     EmAndamento = 'Em Andamento',
@@ -6,11 +8,12 @@ enum Status {
 }
 
 interface Pedidos {
+    id: String;
     solicitante: string;
     descricao: string;
     servico: string;
     status: Status;
-    data_criacao: Date;
+    data_criacao?: Date;
     data_entrega?: Date;
 }
 

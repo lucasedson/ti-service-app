@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { stringify } from "querystring";
 import { randomUUID } from "crypto";
+import Pedidos from "./models/IPedidos";
 
 
 
@@ -10,7 +11,7 @@ import { randomUUID } from "crypto";
 export default function Home() {
 
 
-    const [pedidos, setPedidos] = useState([]);
+    const [pedidos, setPedidos]  = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
   
@@ -36,17 +37,26 @@ export default function Home() {
     return (
       <div className="text-white">
         <h1 className="text-3xl font-bold underline text-white">Pedidos</h1>
+        <div className=" flex justify-around">
         
         {
-          pedidos.pedidos.map((pedido) => (
-            <div className="flex justify-center " key={pedido.id}>
-              <h1 className="font-bold mr-4 text-2xl">{pedido.solicitante}</h1>
-              <h2 className="font-thin mr-4 text-2xl">{pedido.status}</h2>
-            </div>
+
+          pedidos.pedidos.map((ped:Pedidos) => (
+            <div key={ped.id} className="text-white justify-center mr-6">
+
+              <p>{ped.id}</p>
+              <p>{ped.solicitante}</p>
+              <p>{ped.descricao}</p>
+              <p>{ped.servico}</p>
+              <p>{ped.status}</p>
+              <p>{ped.data_criacao}</p>
+
+          </div>
           ))
         }
-
-            
+        
+        
+        </div>
 
   </div>
       
